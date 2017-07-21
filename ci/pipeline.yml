@@ -1,0 +1,41 @@
+---
+resources:
+- name: apps-movie-fun-code-source
+  type: git
+  source:
+    uri: https://github.com/sathyarajan/apps-movie-fun-code  #<---- REPLACE ME
+    branch: spring-boot
+
+- name: deploy-apps-movie-fun-code
+  type: cf
+  source:
+    api: api.system.dev.digifabricpcf.com
+    username: {{cf-user}}
+    password: {{cf-password}}
+    organization: sneethirajan-pal
+    space: SpaceDeveloper
+    skip_cert_check: true
+
+jobs:
+- name: deploy
+  public: true
+  plan:
+  - get: apps-movie-fun-code-source
+    trigger: true
+  - task: package
+    file: apps-movie-fun-code-source/ci/tasks/package.yml
+  - put: deploy-apps-movie-fun-code
+    params:
+      manifest: apps-movie-fun-code-source/manifest.yml
+      path: package-output/movie-app.jar
+
+- name: smoke_test
+  public: true
+  plan:
+  - get: apps-movie-fun-code-source
+    trigger: true
+    passed: [deploy]
+  - task: smoke_test
+    file: apps-movie-fun-code-source/ci/tasks/smoke-test.yml
+    params:
+      MOVIE_APP_URL: http://attendee-service-sighless-acetimetry.app.dev.digifabricpcf.com
