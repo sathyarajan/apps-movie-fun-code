@@ -4,7 +4,7 @@ set -e +x
 
 pushd apps-movie-fun-code-source
   echo "Packaging WAR"
-  mvn clean package -DskipTests
+  ./mvnw clean package -DskipTests
 popd
 
 jar_count=`find apps-movie-fun-code-source/target -type f -name *.war | wc -l`
