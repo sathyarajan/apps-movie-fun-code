@@ -27,7 +27,7 @@ jobs:
   - put: deploy-apps-movie-fun-code
     params:
       manifest: apps-movie-fun-code-source/manifest.yml
-      path: package-output/movie-app.jar
+      path: package-output/movie-app.war
 
 - name: smoke_test
   public: true
