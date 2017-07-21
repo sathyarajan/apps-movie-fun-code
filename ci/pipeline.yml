@@ -38,4 +38,4 @@ jobs:
   - task: smoke_test
     file: apps-movie-fun-code-source/ci/tasks/smoke-test.yml
     params:
-      MOVIE_APP_URL: http://attendee-service-sighless-acetimetry.app.dev.digifabricpcf.com
+      MOVIE_APP_URL: http://movie-app-stormproof-straightness.app.dev.digifabricpcf.com
